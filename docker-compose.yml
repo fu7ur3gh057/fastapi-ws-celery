@@ -1,0 +1,55 @@
+version: "3.8"
+
+services:
+  fastapi:
+    build:
+      context: .
+      dockerfile: deploy/server.Dockerfile
+    ports:
+      - "8555:8555"
+    depends_on:
+      - postgres
+      - redis
+    env_file:
+      - .env
+    networks:
+      - tezt-net
+
+  postgres:
+    image: "postgres:latest"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: tezt
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - tezt-net
+
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
+    networks:
+      - tezt-net
+
+  celery:
+    build:
+      context: .
+      dockerfile: deploy/celery.Dockerfile
+    depends_on:
+      - redis
+      - postgres
+    environment:
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+    networks:
+      - tezt-net
+
+networks:
+  tezt-net:
+    driver: bridge
+volumes:
+  postgres_data:

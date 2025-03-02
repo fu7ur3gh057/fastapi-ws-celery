@@ -1,0 +1,46 @@
+# 🔹 Python compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 🔹 Virtual Environments
+venv/
+.venv/
+
+# 🔹 PyCharm / IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# 🔹 Environment variables
+.env
+.env.local
+.env.*.example
+*.secrets
+
+# 🔹 Docker
+*.dockerignore
+docker-compose.override.yml
+*.tar
+pgdata/
+postgres_data/
+
+# 🔹 Logs and Debugging
+logs/
+*.log
+*.out
+*.err
+nohup.out
+celerybeat-schedule
+celerybeat.pid
+
+# 🔹 Celery Worker results and cache
+celery_task_results/
+celerybeat-schedule
+celerybeat.pid
+
+# 🔹 System files (Mac, Linux, Windows)
+.DS_Store
+Thumbs.db
+*.swp
